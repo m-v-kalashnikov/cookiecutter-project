@@ -1,0 +1,38 @@
+repos:
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.1.12
+    hooks:
+      - id: forbid-crlf
+      - id: remove-crlf
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-merge-conflict
+      - id: check-yaml
+        args: [ --unsafe ]
+  - repo: local
+    hooks:
+      - id: isort
+        name: isort
+        entry: poetry run isort
+        language: system
+        types: [ python ]
+        args: [ --check, --diff ]
+      - id: black
+        name: black
+        entry: poetry run black
+        language: system
+        types: [ python ]
+        args: [ --diff, --color ]
+      - id: pylint
+        name: pylint
+        entry: poetry run pylint
+        language: system
+        types: [ python ]
+      - id: mypy
+        name: mypy
+        entry: poetry run mypy
+        language: system
+        types: [ python ]

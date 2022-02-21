@@ -1,0 +1,115 @@
+{%- set license_classifiers = {
+    'MIT': 'License :: OSI Approved :: MIT License',
+    'BSD-3-Clause': 'License :: OSI Approved :: BSD License',
+    'ISC': 'License :: OSI Approved :: ISC License (ISCL)',
+    'Apache-2.0': 'License :: OSI Approved :: Apache Software License',
+    'GPL-3.0-only': 'License :: OSI Approved :: GNU General Public License v3 (GPLv3)'
+} -%}
+
+[tool.poetry]
+name = "{{ cookiecutter.project_slug }}"
+version = "{{ cookiecutter.version }}"
+description = "{{ cookiecutter.project_short_description }}"
+authors = ["{{ cookiecutter.full_name.replace('\"', '\\\"') }} <{{ cookiecutter.email }}>"]
+{%- if cookiecutter.license_type in license_classifiers %}
+license =  "{{ cookiecutter.license_type }}"
+{%- endif %}
+
+{% if cookiecutter.command_line_interface|lower == 'y' -%}
+[tool.poetry.scripts]
+{{ cookiecutter.project_slug }} = '{{ cookiecutter.package_name }}.cli:main'
+
+
+{% endif -%}
+
+[tool.poetry.dependencies]
+python = "^3.10"
+{%- if cookiecutter.command_line_interface|lower == 'yes' %}
+typer = {version = "*", extras = ["all"]}
+{%- endif %}
+
+[tool.poetry.dev-dependencies]
+pytest = "*"
+black = "*"
+isort = "*"
+mypy = "*"
+pylint = "*"
+pytest-cov = "*"
+coverage = "*"
+pydocstyle = {version = "*", extras = ["toml"]}
+nox = "*"
+{%- if cookiecutter.install_pre_commit_hooks|lower == 'yes' %}
+pre-commit = "*"
+{%- endif %}
+
+[tool.black]
+line-length = 88
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.nox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+
+[tool.pylint.messages_control]
+disable = "C0330, C0326"
+
+[tool.pylint.format]
+max-line-length = "88"
+
+[tool.mypy]
+strict = true
+strict_equality = false
+pretty = true
+show_error_codes = true
+ignore_missing_imports = true
+disable_error_code = ["misc"]
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.pytest.ini_options]
+console_output_style = "progress"
+testpaths = "tests"
+
+[tool.coverage.run]
+branch = true
+source = ["{{ cookiecutter.package_name }}"]
+parallel = true
+concurrency = ["multiprocessing"]
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true
+precision = 4
+
+[tool.pydocstyle]
+inherit = false
+convention = "google"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

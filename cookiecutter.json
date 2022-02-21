@@ -1,0 +1,14 @@
+{
+    "full_name": "Michael Kalashnikov",
+    "email": "kalashnikovsystem@gmail.com",
+    "github_username": "m-v-kalashnikov",
+
+    "project_name": "Python Boilerplate",
+    "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
+    "project_short_description": "Skeleton project created by Cookiecutter PyPackage",
+    "package_name": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+    "version": "0.1.0",
+    "license_type": ["MIT", "BSD-3-Clause", "ISC", "Apache-2.0", "GPL-3.0-only", "No-license"],
+    "install_pre_commit_hooks": ["Yes", "No"],
+    "command_line_interface": ["Yes", "No"]
+}

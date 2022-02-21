@@ -1,0 +1,105 @@
+[tool.poetry]
+name = "cookiecutter-project"
+version = "0.1.0"
+description = "Cookiecutter template"
+authors = ["Michael Kalashnikov <kalashnikovsystem@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://m-v-kalashnikov.github.io/cookiecutter-project/"
+repository = "https://github.com/m-v-kalashnikov/cookiecutter-project"
+documentation = "https://m-v-kalashnikov.github.io/cookiecutter-project/"
+keywords = ['cookiecutter', 'template', 'project']
+
+[tool.poetry.dependencies]
+python = "^3.10"
+cookiecutter = "^1.7.3"
+typer = {version = "^0.4.0", extras = ["all"]}
+
+[tool.poetry.dev-dependencies]
+black = "^22.1.0"
+isort = "^5.10.1"
+mypy = "^0.931"
+pylint = "^2.12.2"
+pytest = "^7.0.1"
+pytest-cov = "^3.0.0"
+pytest-cookies = "^0.6.1"
+coverage = "^6.3.1"
+pydocstyle = {version = "^6.1.1", extras = ["toml"]}
+nox = "^2022.1.7"
+pre-commit = "^2.17.0"
+
+[tool.black]
+line-length = 88
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.nox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | {{cookiecutter.project_slug}}
+)/
+'''
+
+[tool.isort]
+profile = "black"
+skip_glob = ["{{cookiecutter.project_slug}}/**/*"]
+
+[tool.pylint.messages_control]
+disable = "C0330, C0326"
+
+[tool.pylint.format]
+max-line-length = "88"
+ignore = ["{{cookiecutter.project_slug}}", "build", "dist"]
+
+[tool.mypy]
+strict = true
+strict_equality = false
+pretty = true
+show_error_codes = true
+ignore_missing_imports = true
+disable_error_code = ["misc"]
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | {{cookiecutter.project_slug}}
+)/
+'''
+
+[tool.pytest.ini_options]
+console_output_style = "progress"
+testpaths = "tests"
+
+[tool.coverage.run]
+branch = true
+source = ["hooks"]
+parallel = true
+concurrency = ["multiprocessing"]
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true
+precision = 4
+
+[tool.pydocstyle]
+inherit = false
+convention = "google"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
