@@ -1,7 +1,9 @@
 {% if cookiecutter.command_line_interface|lower == 'yes' -%}
-"""Console script for {{cookiecutter.package_name}}."""
+"""Console script for {{cookiecutter.project_slug}}."""
 
 import typer
+
+from {{ cookiecutter.package_name }} import __author__
 
 main: typer.Typer = typer.Typer()
 
@@ -9,8 +11,9 @@ main: typer.Typer = typer.Typer()
 @main.command()
 def info() -> None:
     """CLI entrypoint."""
-    typer.secho("{{ cookiecutter.project_slug }}", fg=typer.colors.BRIGHT_WHITE)
-    typer.secho("=" * len("{{ cookiecutter.project_slug }}"), fg=typer.colors.BRIGHT_WHITE)
+    greeting = f"{{ cookiecutter.project_slug }} by {__author__}"
+    typer.secho(greeting, fg=typer.colors.BRIGHT_WHITE)
+    typer.secho("=" * len(greeting), fg=typer.colors.BRIGHT_WHITE)
     typer.secho(
         "{{ cookiecutter.project_short_description }}",
         fg=typer.colors.BRIGHT_WHITE,
