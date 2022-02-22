@@ -151,8 +151,8 @@ class TestPostGen(BaseBakingMixin):
         result = self.if_baked(cookies.bake(extra_context=context))
 
         project_path, _, package_path = self.project_info(result)
-        cli_file = package_path / "cli.py"
-        assert cli_file.is_file() == cli_exists
+        cli_package = package_path / "cli"
+        assert cli_package.is_dir() == cli_exists
 
         if cli_exists:
             run_app_args = [
@@ -168,7 +168,7 @@ class TestPostGen(BaseBakingMixin):
                 self.if_successful(
                     self.run_app(args=[*run_app_args, _decision.value, "cleanup"])
                 )
-                assert cli_file.is_file() == (_decision != YesNo.NO)
+                assert cli_package.is_dir() == (_decision != YesNo.NO)
 
     @pytest.mark.parametrize(
         "args",

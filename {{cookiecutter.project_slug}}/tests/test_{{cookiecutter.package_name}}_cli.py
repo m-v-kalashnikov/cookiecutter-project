@@ -2,7 +2,7 @@
 {% if cookiecutter.command_line_interface|lower == 'yes' -%}
 from typer.testing import CliRunner
 
-from {{cookiecutter.package_name}} import cli
+from {{cookiecutter.package_name}}.cli import {{cookiecutter.package_name}}
 
 {%- endif %}
 
@@ -18,14 +18,14 @@ class TestCLI:
     def test_main(self) -> None:
         """Test main call of CLI."""
 
-        result = self.runner.invoke(cli.main)
+        result = self.runner.invoke({{cookiecutter.package_name}}.main)
         assert result.exit_code == 0
         assert "{{ cookiecutter.project_slug }}" in result.output
 
     def test_help(self) -> None:
         """Test --help call of CLI."""
 
-        result = self.runner.invoke(cli.main, ["--help"])
+        result = self.runner.invoke({{cookiecutter.package_name}}.main, ["--help"])
         assert result.exit_code == 0
 
         help_lines = list(

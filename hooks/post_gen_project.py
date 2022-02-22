@@ -126,7 +126,7 @@ def cleanup() -> None:
     assert isinstance(project_root, Path)
 
     if state["command_line_interface"] == YesNo.NO:
-        clear(root=project_root / state["package_name"], to_remove=("cli.py",))
+        clear(root=project_root / state["package_name"], to_remove=("cli",))
 
     if state["license_type"] == License.NO_LICENSE:
         clear(root=project_root, to_remove=("LICENSE",))
