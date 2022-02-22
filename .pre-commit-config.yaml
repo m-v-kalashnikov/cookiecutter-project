@@ -8,6 +8,39 @@ repos:
     rev: v4.1.0
     hooks:
       - id: trailing-whitespace
+      - id: end-of-file-fixer
       - id: check-merge-conflict
+      - id: check-executables-have-shebangs
+      - id: check-case-conflict
+        types: [ python ]
+      - id: check-toml
       - id: check-yaml
         args: [ --unsafe ]
+      - id: check-shebang-scripts-are-executable
+      - id: detect-private-key
+      - id: no-commit-to-branch
+        args: [--branch, main]
+  - repo: local
+    hooks:
+      - id: isort
+        name: isort
+        entry: poetry run isort
+        language: system
+        types: [ python ]
+        args: [ --check, --diff ]
+      - id: black
+        name: black
+        entry: poetry run black
+        language: system
+        types: [ python ]
+        args: [ --diff, --color ]
+      - id: pylint
+        name: pylint
+        entry: poetry run pylint
+        language: system
+        types: [ python ]
+      - id: mypy
+        name: mypy
+        entry: poetry run mypy
+        language: system
+        types: [ python ]

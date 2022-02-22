@@ -25,6 +25,10 @@ license =  "{{ cookiecutter.license_type }}"
 [tool.poetry.dependencies]
 python = "^3.10"
 loguru = "*"
+gunicorn = "*"
+uvicorn = {extras = ["standard"], version = "*"}
+pydantic = {version = "*", extras = ["email", "dotenv"]}
+fastapi = "*"
 {%- if cookiecutter.command_line_interface|lower == 'yes' %}
 typer = {version = "*", extras = ["all"]}
 {%- endif %}
